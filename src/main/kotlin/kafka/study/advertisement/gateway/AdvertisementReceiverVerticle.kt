@@ -38,5 +38,5 @@ fun receiveAdvRequest(routingContext: RoutingContext,vertx: Vertx) {
 
 fun HttpServerResponse.error(newStatusCode: Int) = this.setStatusCode(newStatusCode).end()
 
-fun HttpServerResponse.jsonCreated(opportunity: Opportunity) = this.putHeader("Content-Type", "application/json").putHeader("Location", "/opportunities/${opportunity.id}").setStatusCode(201).end(Json.encode(opportunity))
+fun HttpServerResponse.jsonCreated(opportunity: Opportunity) = this.putHeader("Content-Type", "application/json").putHeader("Location", "/opportunities/${opportunity.id}").putHeader("X-opportunity-id",opportunity.id).setStatusCode(201).end(Json.encode(opportunity))
 
