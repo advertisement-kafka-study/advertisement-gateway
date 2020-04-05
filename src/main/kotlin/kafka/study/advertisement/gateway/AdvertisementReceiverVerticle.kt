@@ -10,6 +10,8 @@ import io.vertx.core.json.jackson.DatabindCodec
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
+import kafka.study.advertisement.gateway.domain.AdvertisementRequest
+import kafka.study.advertisement.gateway.domain.Opportunity
 import java.nio.charset.StandardCharsets
 
 class AdvertisementReceiverVerticle : AbstractVerticle() {
@@ -18,7 +20,7 @@ class AdvertisementReceiverVerticle : AbstractVerticle() {
     DatabindCodec.mapper().registerModule(KotlinModule())
     var router = Router.router(vertx)
     router.route().handler(BodyHandler.create())
-    router.post("/advertisements").handler { receiveAdvRequest(it,this.vertx) }
+    router.post("/api/advertisements").handler { receiveAdvRequest(it,this.vertx) }
     vertx.createHttpServer().requestHandler(router).listen(9999)
   }
 }
