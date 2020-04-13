@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "a1ccf4f3-f2e6-4aa6-819f-0687b673721a",
+		"name": "Advertisement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Advertisement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Customer-Key",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"category\" : \"{{$guid}}\",\n\t\"requirements\" : {\n\t\t\"timeout\" : 5000\n\t},\n\t\"callbackData\" : {\n\t\t\"url\" : \"http://localhost:8080/\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9999/advertisements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"advertisements"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
