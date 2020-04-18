@@ -1,4 +1,4 @@
-package kafka.study.advertisement.gateway
+package kafka.study.advertisement.gateway.channel.input
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.common.hash.Hashing
@@ -14,13 +14,13 @@ import kafka.study.advertisement.gateway.domain.AdvertisementRequest
 import kafka.study.advertisement.gateway.domain.Opportunity
 import java.nio.charset.StandardCharsets
 
-class AdvertisementReceiverVerticle : AbstractVerticle() {
+class HTTPAdvertisementReceiverVerticle : AbstractVerticle() {
 
   override fun start() {
     DatabindCodec.mapper().registerModule(KotlinModule())
     var router = Router.router(vertx)
     router.route().handler(BodyHandler.create())
-    router.post("/api/advertisements").handler { receiveAdvRequest(it,this.vertx) }
+    router.post("/api/advertisements").handler { receiveAdvRequest(it, this.vertx) }
     vertx.createHttpServer().requestHandler(router).listen(9999)
   }
 }
@@ -30,8 +30,8 @@ fun receiveAdvRequest(routingContext: RoutingContext,vertx: Vertx) {
   if (customerKey == null) {
     routingContext.response().error(422)
   } else {
-    val advReq = Json.decodeValue(routingContext.getBodyAsJson().toBuffer(), AdvertisementRequest::class.java)
-    val opportunityId = Hashing.sha256().hashString(Json.encode(advReq), StandardCharsets.UTF_8).toString();
+    val advReq = Json.decodeValue(routingContext.bodyAsJson.toBuffer(), AdvertisementRequest::class.java)
+    val opportunityId = advReq.opportunityId()
     val opportunity = Opportunity(id = opportunityId, customerKey = customerKey, advReq = advReq)
     vertx.eventBus().send("advertisement-request",Json.encode(opportunity))
     routingContext.response().jsonCreated(opportunity)

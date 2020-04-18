@@ -1,10 +1,17 @@
 package kafka.study.advertisement.gateway.domain
 
-data class AdvertisementRequest (val category:String, val requirements: AdvRequirements, val callbackData: CallbackData)
+import com.google.common.hash.Hashing
+import io.vertx.core.json.Json
+import java.nio.charset.StandardCharsets
 
-data class AdvRequirements(val timeout:Int)
+data class AdvertisementRequest(val category: String, val requirements: AdvRequirements, val callbackData: CallbackData) {
 
-data class CallbackData(val url:String)
+  fun opportunityId(): String = Hashing.sha256().hashString(Json.encode(this), StandardCharsets.UTF_8).toString();
 
-data class Opportunity(val id:String,val customerKey:String,val advReq: AdvertisementRequest)
+}
 
+data class AdvRequirements(val timeout: Int)
+
+data class CallbackData(val url: String)
+
+data class Opportunity(val id: String, val customerKey: String, val advReq: AdvertisementRequest)

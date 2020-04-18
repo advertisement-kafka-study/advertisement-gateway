@@ -1,4 +1,4 @@
-package kafka.study.advertisement.gateway.channel
+package kafka.study.advertisement.gateway.channel.output
 
 import io.cloudevents.kafka.CloudEventsKafkaProducer
 import io.cloudevents.v1.AttributesImpl

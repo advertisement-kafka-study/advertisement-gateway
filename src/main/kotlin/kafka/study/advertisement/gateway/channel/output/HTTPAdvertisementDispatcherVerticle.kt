@@ -1,4 +1,4 @@
-package kafka.study.advertisement.gateway.channel
+package kafka.study.advertisement.gateway.channel.output
 
 import io.cloudevents.CloudEvent
 import io.cloudevents.extensions.DistributedTracingExtension
