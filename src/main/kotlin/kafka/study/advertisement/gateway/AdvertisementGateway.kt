@@ -32,6 +32,15 @@ class AdvertisementGateway : AbstractVerticle() {
 
   }
 
+  companion object {
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+      Vertx.vertx().deployVerticle(AdvertisementGateway())
+    }
+
+  }
+
 }
 
 private fun deployInputVerticles(vertx: Vertx, sysConfig: SystemData) {
